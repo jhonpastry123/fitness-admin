@@ -50,7 +50,7 @@
                     <tbody>
                         @foreach ($fooditems as $foodItem)
                         <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ ++$i }}</td>
                             <td class="d-none d-sm-table-cell">{{ $foodItem->food_name }}</td>
                             <td class="d-none d-sm-table-cell">{{ $foodItem->categories }}</td>
                             <td class="d-none d-sm-table-cell">{{ $foodItem->carbon }}</td>
@@ -104,7 +104,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div> --}}
+                <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div>
             </div>
         </div>
     </div>

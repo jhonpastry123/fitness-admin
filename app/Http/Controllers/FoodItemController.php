@@ -18,7 +18,7 @@ class FoodItemController extends Controller
     public function index()
     {
         //
-        $fooditems = FoodItem::latest()->get();
+        $fooditems = FoodItem::latest()->paginate(5);
 
         foreach ($fooditems as $key => $fooditem) {
 

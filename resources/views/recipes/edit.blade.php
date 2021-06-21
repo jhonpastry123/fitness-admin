@@ -64,7 +64,7 @@
                         <div class="form-group row">
                             <label for="image" class="col-sm-4">Εικόνα:</label>
                             <div class="col-sm-8">
-                                <img src="data:image/png;base64, {{ $recipe->image }}" width="100" height="100" alt="Recipe" />
+                                <img src="{{ asset('storage/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
                                 <input type="file" name="image" id="image" placeholder="Image">
                             </div>
                         </div>

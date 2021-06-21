@@ -20,7 +20,7 @@ class FoodItemController extends Controller
     public function index()
     {
         //       
-        $fooditems = FoodItem::all();
+        $fooditems = FoodItem::get();
         foreach ($fooditems as $key => $fooditem) {
             $categories = [];
             foreach ($fooditem->foodRelations as $key2 => $relation) {

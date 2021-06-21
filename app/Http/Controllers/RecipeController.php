@@ -7,6 +7,7 @@ use App\Models\FoodValue;
 use App\Models\Category;
 use App\Models\FoodItem;
 use Illuminate\Http\Request;
+use Storage;
 
 class RecipeController extends Controller
 {
@@ -54,14 +55,16 @@ class RecipeController extends Controller
             'image' => 'required',
         ]);
 
-        //$image = base64_encode(file_get_contents($request->file('image')->pat‌​h()));
-        $image = base64_encode(file_get_contents($request->image->path()));
+        $imageName = 'image_' . time() . '.png'; //generating unique file name;
+
+        $image = file_get_contents($request->image->path()); // image base64 encoded
+        Storage::disk('public')->put($imageName,$image);
 
         Recipe::create([
             'title' => $request->title,
             'categories_id' => $request->categories_id,
             'description' => $request->description,
-            'image' => $image,
+            'image' => $imageName,
         ]);
 
         $food_id = explode(",", $request->food_id);
@@ -129,16 +132,24 @@ class RecipeController extends Controller
         ]);
 
         //$image = base64_encode(file_get_contents($request->file('image')->pat‌​h()));
+        $imageName = 'image_' . time() . '.png'; //generating unique file name;
+
+
         if(!$request->image)
-            $image = $recipe->image;
-        else
-            $image = base64_encode(file_get_contents($request->image->path()));
+            $imageName = $recipe->image;
+        else {
+            $imageName = 'image_' . time() . '.png';
+            $image = file_get_contents($request->image->path()); // image base64 encoded
+            Storage::disk('public')->delete($recipe->image);
+            Storage::disk('public')->put($imageName,$image);
+        }
+            
 
         $recipe->update([
             'title' => $request->title,
             'categories_id' => $request->categories_id,
             'description' => $request->description,
-            'image' => $image,
+            'image' => $imageName,
         ]);
         
         $food_id = explode(",", $request->food_id);
@@ -176,6 +187,7 @@ class RecipeController extends Controller
         foreach($foodvalues as $foodvalue) {
             $foodvalue->delete();
         }
+        Storage::disk('public')->delete($recipe->image);
         $recipe->delete();
 
         return  redirect()->route('recipes.index')
