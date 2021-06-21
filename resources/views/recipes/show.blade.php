@@ -46,7 +46,7 @@
                         <div class="form-group row">
                             <label for="image" class="col-sm-4">Image:</label>
                             <div class="col-sm-8">
-                                <img src="{{ asset('storage/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
+                                <img src="{{ asset('images/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
                             </div>
                         </div>
 

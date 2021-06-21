@@ -47,7 +47,7 @@
                         <tr>
                             <td class="text-center">{{ ++$i }}</td>
                             <td class="d-none d-sm-table-cell">
-                                <img src="{{ asset('storage/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
+                                <img src="{{ asset('images/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
                             </td>
                             <td class="d-none d-sm-table-cell">{{ $recipe->title }}</td>
                             <td class="d-none d-sm-table-cell">{{ $recipe->category->name }}</td>

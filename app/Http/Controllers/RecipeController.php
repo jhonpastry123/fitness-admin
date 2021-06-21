@@ -57,8 +57,7 @@ class RecipeController extends Controller
 
         $imageName = 'image_' . time() . '.png'; //generating unique file name;
 
-        $image = file_get_contents($request->image->path()); // image base64 encoded
-        Storage::disk('public')->put($imageName,$image);
+        $request->image->move(public_path('images'), $imageName);
 
         Recipe::create([
             'title' => $request->title,
@@ -139,9 +138,10 @@ class RecipeController extends Controller
             $imageName = $recipe->image;
         else {
             $imageName = 'image_' . time() . '.png';
-            $image = file_get_contents($request->image->path()); // image base64 encoded
-            Storage::disk('public')->delete($recipe->image);
-            Storage::disk('public')->put($imageName,$image);
+            if(\File::exists(public_path('images/'.$recipe->image))){
+                \File::delete(public_path('images/'.$recipe->image));
+            }
+            $request->image->move(public_path('images'), $imageName);
         }
             
 
@@ -187,7 +187,9 @@ class RecipeController extends Controller
         foreach($foodvalues as $foodvalue) {
             $foodvalue->delete();
         }
-        Storage::disk('public')->delete($recipe->image);
+        if(\File::exists(public_path('images/'.$recipe->image))){
+            \File::delete(public_path('images/'.$recipe->image));
+        }
         $recipe->delete();
 
         return  redirect()->route('recipes.index')
