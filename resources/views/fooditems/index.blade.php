@@ -104,7 +104,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div>
+                {{-- <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div> --}}
             </div>
         </div>
     </div>
