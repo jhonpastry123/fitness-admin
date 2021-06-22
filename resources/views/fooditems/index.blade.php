@@ -1,7 +1,4 @@
 @extends('layouts.backend')
-@section('css_after')
-    <link href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" rel="stylesheet" />
-@endsection
 @section('content')
 <!-- Hero -->
 <div class="bg-body-light">
@@ -27,6 +24,25 @@
             </div>
         </div>
         <div class="block-content">
+            <div class="pull-right d-flex justify-content-end mb-3">
+                <form action="{{ route('fooditems.index') }}" method="GET" role="search" style="width:fit-content;">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="submit" title="Search foods">
+                                <span class="fas fa-search"></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control" name="search" placeholder="Search foods" id="search" value="{{ $search }}">
+                        <a href="{{ route('fooditems.index') }}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                    <span class="fas fa-sync-alt"></span>
+                                </button>
+                            </span>
+                        </a>
+                    </div>
+                </form>
+            </div>
             @if ($message = Session::get('success'))
             <div class="alert alert-success">
                 <p style="margin-bottom:0;">{{ $message }}</p>
@@ -104,7 +120,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div> --}}
+                <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div>
             </div>
         </div>
     </div>
@@ -118,12 +134,6 @@
         $('.confirm').click(function() {
             $('#delete-' + $(this).data("id")).submit();
         });
-        
-        $('#foodTable').DataTable();
     });
 </script>
-@endsection
-
-@section('js_after')
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 @endsection
