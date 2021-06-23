@@ -120,7 +120,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                @if($search == '')
                 <div class="text-center" style="width: fit-content; margin:auto;">{!! $fooditems->links() !!}</div>
+                @endif
             </div>
         </div>
     </div>

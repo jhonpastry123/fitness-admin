@@ -18,7 +18,8 @@ class FoodItemController extends Controller
     public function index(Request $request)
     {
         //
-        $fooditems = FoodItem::latest()->where([
+        if ($request->search) {
+            $fooditems = FoodItem::latest()->where([
                 ['food_name', '!=', NULL],
                 [function ($query) use ($request) {
                     if (($search = $request->search)) {
@@ -26,7 +27,11 @@ class FoodItemController extends Controller
                     }
                 }]    
             ])
-            ->paginate(10);
+            ->get();
+        }
+        else {
+            $fooditems = FoodItem::latest()->paginate(10);
+        }
 
         foreach ($fooditems as $key => $fooditem) {
 
