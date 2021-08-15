@@ -25,9 +25,19 @@ class UserController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
-            'gender' => 'required',
-            'birthday' => 'required',
             'type' => 'required',
+            'weight' => 'required',
+            'initial_weight' => 'required',
+            'gender' => 'required',
+            'height' => 'required',
+            'birthday' => 'required',
+            'age' => 'required',
+            'start_date' => 'required',
+            'gymType' => 'required',
+            'total_exercise' => 'required',
+            'goal_weight' => 'required',
+            'weekly_reduce' => 'required',
+            'dietMode' => 'required',
         ]);
         if ($validator->fails()) {
             // return response
@@ -66,7 +76,8 @@ class UserController extends Controller
                 'success' => true,
                 'message' => 'User login successful',
                 'accessToken' => $accessToken,
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'user' => $user
             ];
             return response()->json($response, 200);
         } else {

@@ -11,6 +11,6 @@ class Customer extends Authenticatable
     use HasApiTokens;
     //
     protected $fillable = [
-        'name', 'email', 'password', 'gender', 'birthday', 'active',  'type'
+        'name', 'email', 'password', 'type', 'goal', 'weight', 'initial_weight', 'gender', 'height', 'birthday', 'age', 'start_date', 'gymType', 'total_exercise', 'goal_weight', 'weekly_reduce', 'dietMode'
     ];
 }

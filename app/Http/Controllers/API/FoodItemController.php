@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\FoodItem;
 use App\Models\FoodValue;
 use App\Models\FoodCategory;
+use App\Http\Resources\FoodItem as FoodItemResource;
 use Validator;
 
 class FoodItemController extends Controller
@@ -20,22 +21,17 @@ class FoodItemController extends Controller
     public function index()
     {
         //       
-        $fooditems = FoodItem::get();
+        $fooditems = FoodItem::paginate(25);
         foreach ($fooditems as $key => $fooditem) {
             $categories = [];
             foreach ($fooditem->foodRelations as $key2 => $relation) {
                 array_push($categories, $relation->foodCategory);
             }
             $fooditem['categories'] = $categories;
+            $fooditem['relations'] = $fooditem->foodRelations;
         }
 
-        $response = [
-            'success' => true,
-            'message' => 'FoodS retrieved successfully.',
-            'fooditems' => $fooditems
-        ];
-
-        return response()->json($response, 200);
+        return FoodItemResource::collection($fooditems);
     }
 
     /**
@@ -46,8 +42,6 @@ class FoodItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        
         $input = $request->all();
         $validator = Validator::make($input, [
             'food_name' => 'required',

@@ -10,6 +10,7 @@ use App\Models\FoodItem;
 use Illuminate\Http\Request;
 use Validator;
 use Storage;
+use App\Http\Resources\Recipe as RecipeResource;
 
 class RecipeController extends Controller
 {
@@ -20,8 +21,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
-        $recipes = Recipe::all();
+        $recipes = Recipe::paginate(25);
         foreach ($recipes as $key => $recipe) {
             $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
             foreach ($foodvalues as $key1 => $foodvalue) {
@@ -31,6 +31,7 @@ class RecipeController extends Controller
                     array_push($categories, $relation->foodCategory);
                 }
                 $fooditem['categories'] = $categories;
+                $fooditem['relations'] = $fooditem->foodRelations;
                 $foodvalues[$key1]['food_item'] = $fooditem;
             }
             $category_name = Category::where('id', $recipe->categories_id)->get();
@@ -38,13 +39,7 @@ class RecipeController extends Controller
             $recipes[$key]['foodvalues'] = $foodvalues;
         }
 
-        $response = [
-            'success' => true,
-            'message' => 'Recipes retrieved successfully.',
-            'fooditems' => $recipes
-        ];
-
-        return response()->json($response, 200);
+        return RecipeResource::collection($recipes);
     }
 
     /**

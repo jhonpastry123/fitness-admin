@@ -20,8 +20,5 @@ Route::resource('recipes', 'API\RecipeController');
 Route::resource('sports', 'API\SportController');
 
 Route::middleware('auth:api')->group(function () {
-    // Route::resource('fooditems', 'API\FoodItemController');
-    // Route::resource('recipes', 'API\RecipeController');
     Route::resource('settings', 'API\SettingController');
-    //Route::resource('sports', 'API\SportController');
 });
