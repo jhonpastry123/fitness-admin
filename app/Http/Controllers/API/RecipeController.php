@@ -19,9 +19,14 @@ class RecipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $recipes = Recipe::paginate(25);
+        $query = Recipe::query();
+        $q = $request->get('q');
+        if ($q) {
+            $query->where('title', 'like', "%$q%");
+        }
+        $recipes = $query->latest()->paginate();
         foreach ($recipes as $key => $recipe) {
             $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
             foreach ($foodvalues as $key1 => $foodvalue) {

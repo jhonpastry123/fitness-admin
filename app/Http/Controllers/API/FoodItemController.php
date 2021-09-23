@@ -18,10 +18,14 @@ class FoodItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //       
-        $fooditems = FoodItem::paginate(25);
+        $query = FoodItem::query();
+        $q = $request->get('q');
+        if ($q) {
+            $query->where('food_name', 'like', "%$q%");
+        }
+        $fooditems = $query->latest()->paginate();
         foreach ($fooditems as $key => $fooditem) {
             $categories = [];
             foreach ($fooditem->foodRelations as $key2 => $relation) {
