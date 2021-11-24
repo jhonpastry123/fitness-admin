@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Sport;
 use Illuminate\Http\Request;
+use App\Http\Resources\Sport as SportResource;
 
 class SportController extends Controller
 {
@@ -15,10 +16,10 @@ class SportController extends Controller
      */
     public function index()
     {
-        //
-        $sports = Sport::all();
+        $query = Sport::query();
+        $sports = $query->latest()->get();
 
-        return  response()->json($sports);
+        return SportResource::collection($sports);
     }
 
     /**

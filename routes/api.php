@@ -13,12 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('register', 'API\UserController@register');
-Route::post('login', 'API\UserController@login');
+Route::post('register', 'API\CustomerController@register');
+Route::post('login', 'API\CustomerController@login');
 Route::resource('fooditems', 'API\FoodItemController');
+Route::get('recipes/list', 'API\RecipeController@list');
 Route::resource('recipes', 'API\RecipeController');
+Route::resource('categories', 'API\CategoryController');
 Route::resource('sports', 'API\SportController');
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('profile', 'API\CustomerController@profile');
     Route::resource('settings', 'API\SettingController');
+    Route::get('informations/getInformation', 'API\CustomerInformationController@getInformation');
+    Route::resource('informations', 'API\CustomerInformationController');
 });

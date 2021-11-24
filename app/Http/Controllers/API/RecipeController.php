@@ -215,4 +215,36 @@ class RecipeController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function list(Request $request)
+    {
+        $query = Recipe::query();
+        $index = $request->get('index');
+        $q = $request->get('q');
+        if ($index) {
+            $query->where('categories_id', $index);
+        }
+        if ($q) {
+            $query->where('title', 'like', "%$q%");
+        }
+        $recipes = $query->latest()->get();
+        foreach ($recipes as $key => $recipe) {
+            $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
+            foreach ($foodvalues as $key1 => $foodvalue) {
+                $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
+                $categories = [];
+                foreach ($fooditem->foodRelations as $key2 => $relation) {
+                    array_push($categories, $relation->foodCategory);
+                }
+                $fooditem['categories'] = $categories;
+                $fooditem['relations'] = $fooditem->foodRelations;
+                $foodvalues[$key1]['food_item'] = $fooditem;
+            }
+            $category_name = Category::where('id', $recipe->categories_id)->get();
+            $recipes[$key]['category_name'] = $category_name;
+            $recipes[$key]['foodvalues'] = $foodvalues;
+        }
+
+        return RecipeResource::collection($recipes);
+    }
 }

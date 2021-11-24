@@ -8,15 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Customer;
 use Validator;
 use Hash;
+use App\Http\Resources\Customer as CustomerResource;
+use Carbon\Carbon;
 
-class UserController extends Controller
+class CustomerController extends Controller
 {
     public function __construct()
     {
         $this->middleware('guest:customer')->except('logout');
     }
     /**
-     * User Register
+     * Customer Register
      */
     public function register(Request $request)
     {
@@ -24,69 +26,62 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-            'c_password' => 'required|same:password',
             'type' => 'required',
-            'weight' => 'required',
-            'initial_weight' => 'required',
-            'gender' => 'required',
-            'height' => 'required',
-            'birthday' => 'required',
-            'age' => 'required',
-            'start_date' => 'required',
-            'gymType' => 'required',
-            'total_exercise' => 'required',
-            'goal_weight' => 'required',
-            'weekly_reduce' => 'required',
-            'dietMode' => 'required',
+            'purchase_time' => 'required'
         ]);
-        if ($validator->fails()) {
+        $customer = Customer::where("email", $request->email)->get();
+        if ($validator->fails() || count($customer) > 0) {
             // return response
             $response = [
                 'success' => false,
-                'message' => 'Validation Error.', $validator->errors(),
+                'token' => ''
             ];
-            return response()->json($response, 404);
+            return response()->json($response, 200);
         }
 
         // insert to DB
         $input = $request->all();
+        $current_date = Carbon::now();
         $input['password'] = bcrypt($input['password']);
-        $user = Customer::create($input);
-        $accessToken = $user->createToken('ApplicationName')->accessToken;
+        $Customer = Customer::create($input);
+        $accessToken = $Customer->createToken(config('app.name'))->accessToken;
 
         // return response
         $response = [
             'success' => true,
-            'message' => 'User registration successful',
-            'accessToken' => $accessToken,
+            'token' => $accessToken,
+            'id' => $Customer->id
         ];
         return response()->json($response, 200);
     }
 
     /**
-     * User Login
+     * Customer Login
      */
     public function login(Request $request)
     {
         if (Auth::guard('customer')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            $user = Auth::guard('customer')->user();
-            $accessToken = $user->createToken('ApplicationName')->accessToken;
+            $Customer = Auth::guard('customer')->user();
+            $accessToken = $Customer->createToken(config('app.name'))->accessToken;
             // return response
             $response = [
                 'success' => true,
-                'message' => 'User login successful',
-                'accessToken' => $accessToken,
-                'user_id' => $user->id,
-                'user' => $user
+                'token' => $accessToken,
+                'id' => $Customer->id
             ];
             return response()->json($response, 200);
         } else {
             // return response
             $response = [
                 'success' => false,
-                'message' => 'Unauthorised',
+                'token' => ''
             ];
             return response()->json($response, 404);
         }
+    }
+
+    public function profile(Request $request)
+    {
+        return CustomerResource::make($request->user());
     }
 }
