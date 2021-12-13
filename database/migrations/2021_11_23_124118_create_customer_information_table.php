@@ -32,8 +32,10 @@ class CreateCustomerInformationTable extends Migration
             $table->float('goal_weight');
             $table->float('weekly_goal');
             $table->integer('diet_mode');
+            $table->float('neck')->default(0);
+            $table->float('waist')->default(0);
+            $table->float('thigh')->default(0);
             $table->integer('water')->default(0);
-            $table->integer('fruit')->default(0);
             $table->date('date');
             $table->timestamps();
         });

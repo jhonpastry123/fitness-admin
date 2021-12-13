@@ -20,9 +20,9 @@ class Recipe extends JsonResource
             'categories_id' => $this->categories_id,
             'description' => $this->description,
             'image' => $this->image,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'category_name' => Category::collection($this->category_name),
+            'units' => $this->units,
+            'points' => $this->points,
+            'amount' => $this->amount,
             'foodvalues' => FoodValue::collection($this->foodvalues),
         ];
     }

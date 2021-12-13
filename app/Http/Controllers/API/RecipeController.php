@@ -22,25 +22,46 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         $query = Recipe::query();
+        $category = $request->get('category');
         $q = $request->get('q');
         if ($q) {
             $query->where('title', 'like', "%$q%");
         }
+        $query->where('categories_id', $category);
         $recipes = $query->latest()->paginate();
+
         foreach ($recipes as $key => $recipe) {
             $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
+            $total_units = 0;
+            $total_points = 0;
+            $total_amount = 0;
             foreach ($foodvalues as $key1 => $foodvalue) {
                 $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
-                $categories = [];
-                foreach ($fooditem->foodRelations as $key2 => $relation) {
-                    array_push($categories, $relation->foodCategory);
+
+                $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
+                if ((($points * 1000) % 100 ) > 75 ) {
+                    $points = ceil($points*10) / 10;
+                } else {
+                    $points = floor($points*10) / 10;
                 }
-                $fooditem['categories'] = $categories;
-                $fooditem['relations'] = $fooditem->foodRelations;
+
+                $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
+                if ((($units * 1000) % 100 ) > 75 ) {
+                    $units = ceil($units*10) / 10;
+                } else {
+                    $units = floor($units*10) / 10;
+                }
+                $fooditem['points'] = $points;
+                $fooditem['units'] = $units;
                 $foodvalues[$key1]['food_item'] = $fooditem;
+
+                $total_amount += $foodvalue->amount;
+                $total_points += $points;
+                $total_units += $units;
             }
-            $category_name = Category::where('id', $recipe->categories_id)->get();
-            $recipes[$key]['category_name'] = $category_name;
+            $recipes[$key]['units'] = $total_units;
+            $recipes[$key]['points'] = $total_points;
+            $recipes[$key]['amount'] = $total_amount;
             $recipes[$key]['foodvalues'] = $foodvalues;
         }
 
@@ -113,18 +134,40 @@ class RecipeController extends Controller
     {
         // return response
         $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
-        foreach ($foodvalues as $key => $foodvalue) {
-            $foodvalues[$key]['food_item'] = FoodItem::where('id', $foodvalue->food_items_id)->first();
+        $total_units = 0;
+        $total_points = 0;
+        $total_amount = 0;
+        foreach ($foodvalues as $key1 => $foodvalue) {
+            $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
+
+            $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
+            if ((($points * 1000) % 100 ) > 75 ) {
+                $points = ceil($points*10) / 10;
+            } else {
+                $points = floor($points*10) / 10;
+            }
+
+            $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
+            if ((($units * 1000) % 100 ) > 75 ) {
+                $units = ceil($units*10) / 10;
+            } else {
+                $units = floor($units*10) / 10;
+            }
+
+            $fooditem['points'] = $points;
+            $fooditem['units'] = $units;
+            $foodvalues[$key1]['food_item'] = $fooditem;
+
+            $total_amount += $foodvalue->amount;
+            $total_points += $points;
+            $total_units += $units;
         }
+        $recipe['units'] = $total_units;
+        $recipe['points'] = $total_points;
+        $recipe['amount'] = $total_amount;
+        $recipe['foodvalues'] = $foodvalues;
 
-        $response = [
-            'success' => true,
-            'message' => 'Recipe retrieved successfully.',
-            'recipe' => $recipe,
-            'foodvalues' => $foodvalues
-        ];
-
-        return response()->json($response, 200);
+        return RecipeResource::make($recipe);
     }
 
     /**
@@ -230,18 +273,37 @@ class RecipeController extends Controller
         $recipes = $query->latest()->get();
         foreach ($recipes as $key => $recipe) {
             $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
+            $total_units = 0;
+            $total_points = 0;
+            $total_amount = 0;
             foreach ($foodvalues as $key1 => $foodvalue) {
                 $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
-                $categories = [];
-                foreach ($fooditem->foodRelations as $key2 => $relation) {
-                    array_push($categories, $relation->foodCategory);
+
+                $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
+                if ((($points * 1000) % 100 ) > 75 ) {
+                    $points = ceil($points*10) / 10;
+                } else {
+                    $points = floor($points*10) / 10;
                 }
-                $fooditem['categories'] = $categories;
-                $fooditem['relations'] = $fooditem->foodRelations;
+
+                $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
+                if ((($units * 1000) % 100 ) > 75 ) {
+                    $units = ceil($units*10) / 10;
+                } else {
+                    $units = floor($units*10) / 10;
+                }
+
+                $fooditem['points'] = $points;
+                $fooditem['units'] = $units;
                 $foodvalues[$key1]['food_item'] = $fooditem;
+
+                $total_amount += $foodvalue->amount;
+                $total_points += $points;
+                $total_units += $units;
             }
-            $category_name = Category::where('id', $recipe->categories_id)->get();
-            $recipes[$key]['category_name'] = $category_name;
+            $recipes[$key]['units'] = $total_units;
+            $recipes[$key]['points'] = $total_points;
+            $recipes[$key]['amount'] = $total_amount;
             $recipes[$key]['foodvalues'] = $foodvalues;
         }
 

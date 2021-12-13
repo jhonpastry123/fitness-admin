@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use Validator;
 use Carbon\Carbon;
+use App\Http\Resources\CustomerInformation as CustomerInformationResource;
+use App\Http\Resources\GraphValue as GraphValueResource;
 
 class CustomerInformationController extends Controller
 {
@@ -72,7 +74,10 @@ class CustomerInformationController extends Controller
         $current_date = Carbon::now();
         $input['date'] = $current_date->toDateString();
 
-        $information = CustomerInformation::create($input);
+        $information = CustomerInformation::updateOrCreate([
+            "customer_id" => $input['customer_id'],
+            "date" => $input['date'],
+        ],$input);
 
         // return response
         // $response = [
@@ -89,29 +94,93 @@ class CustomerInformationController extends Controller
      * @param  \App\Models\CustomerInformation  $customerInformation
      * @return \Illuminate\Http\Response
      */
-    public function show(CustomerInformation $customerInformation)
+    public function show(Request $request)
     {
-        //
+        dd($request);
     }
 
     public function getInformation(Request $request)
     {
         $input = $request->all();
         $customer = $request->user();
-        $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $input['date'])->latest()->first();
-
-        if ($information) {
-            $response = [
-                'data' =>  $information
-            ];
-        } else {
-            $response = [
-                'data' =>  null
-            ];
-        }
-
+        $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $input['date'])->orderBy('date', 'DESC')->latest()->first();
         
-        return response()->json($response);
+        return CustomerInformationResource::make($information);;
+    }
+
+    public function getGraphValues(Request $request)
+    {
+        $input = $request->all();
+        $customer = $request->user();
+        $informations = CustomerInformation::select(['id', 'date', 'weight'])->where('customer_id', $customer->id)->where('date', '<=', $input['date'])->orderBy('date', 'ASC')->latest()->get();
+        
+        return GraphValueResource::collection($informations);
+    }
+
+    public function saveDietMode(Request $request)
+    {
+        $dietmode = $request->get('diet_mode');
+        $customer = $request->user();
+        $current_date = Carbon::now();
+        $date = $current_date->toDateString();
+
+        $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '=', $date)->orderBy('date', 'DESC')->latest()->first();
+        if ($information) {
+            $information->diet_mode = $dietmode;
+            $information->save();
+        } else {
+            $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $date)->orderBy('date', 'DESC')->latest()->first();
+            $new_info = $information->toArray();
+            $new_info['date'] = $date;
+            $new_info['diet_mode'] = $dietmode;
+            CustomerInformation::create($new_info);
+        }
+        
+        return response()->json(true, 200);
+    }
+
+    public function saveWeight(Request $request)
+    {
+        $weight = $request->get('weight');
+        $customer = $request->user();
+        $current_date = Carbon::now();
+        $date = $current_date->toDateString();
+
+        $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '=', $date)->orderBy('date', 'DESC')->latest()->first();
+        if ($information) {
+            $information->weight = $weight;
+            $information->save();
+        } else {
+            $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $date)->orderBy('date', 'DESC')->latest()->first();
+            $new_info = $information->toArray();
+            $new_info['date'] = $date;
+            $new_info['weight'] = $weight;
+            CustomerInformation::create($new_info);
+        }
+        
+        return response()->json(true, 200);
+    }
+
+    public function saveWater(Request $request)
+    {
+        $water = $request->get('water');
+        $customer = $request->user();
+        $current_date = Carbon::now();
+        $date = $current_date->toDateString();
+
+        $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '=', $date)->orderBy('date', 'DESC')->latest()->first();
+        if ($information) {
+            $information->water = $water;
+            $information->save();
+        } else {
+            $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $date)->orderBy('date', 'DESC')->latest()->first();
+            $new_info = $information->toArray();
+            $new_info['date'] = $date;
+            $new_info['water'] = $water;
+            CustomerInformation::create($new_info);
+        }
+        
+        return response()->json(true, 200);
     }
 
     /**

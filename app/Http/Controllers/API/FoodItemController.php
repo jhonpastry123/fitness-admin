@@ -27,12 +27,21 @@ class FoodItemController extends Controller
         }
         $fooditems = $query->latest()->paginate();
         foreach ($fooditems as $key => $fooditem) {
-            $categories = [];
-            foreach ($fooditem->foodRelations as $key2 => $relation) {
-                array_push($categories, $relation->foodCategory);
+            $points = $fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15;
+            if ((($points * 1000) % 100 ) > 75 ) {
+                $points = ceil($points*10) / 10;
+            } else {
+                $points = floor($points*10) / 10;
             }
-            $fooditem['categories'] = $categories;
-            $fooditem['relations'] = $fooditem->foodRelations;
+
+            $units = $fooditem->kcal / 100;
+            if ((($units * 1000) % 100 ) > 75 ) {
+                $units = ceil($units*10) / 10;
+            } else {
+                $units = floor($units*10) / 10;
+            }
+            $fooditem['points'] = $points;
+            $fooditem['units'] = $units;
         }
 
         return FoodItemResource::collection($fooditems);
@@ -85,14 +94,23 @@ class FoodItemController extends Controller
      */
     public function show(FoodItem $fooditem)
     {
-        $fooditem['category'] = FoodCategory::where('id', $fooditem->food_categories_id)->first();
-        // return response
-        $response = [
-            'success' => true,
-            'message' => 'Book retrieved successfully.',
-            'fooditem' => $fooditem
-        ];
-        return response()->json($response, 200);
+        $points = $fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15;
+        if ((($points * 1000) % 100 ) > 75 ) {
+            $points = ceil($points*10) / 10;
+        } else {
+            $points = floor($points*10) / 10;
+        }
+
+        $units = $fooditem->kcal / 100;
+        if ((($units * 1000) % 100 ) > 75 ) {
+            $units = ceil($units*10) / 10;
+        } else {
+            $units = floor($units*10) / 10;
+        }
+        $fooditem['points'] = $points;
+        $fooditem['units'] = $units;
+
+        return FoodItemResource::make($fooditem);
     }
 
     /**
