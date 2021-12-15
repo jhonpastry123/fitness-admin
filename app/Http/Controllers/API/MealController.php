@@ -52,6 +52,7 @@ class MealController extends Controller
             'food_id' => 'required',
             'recipe_id' => 'required',
             'gram' => 'required',
+            'date' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -63,16 +64,7 @@ class MealController extends Controller
             return response()->json(false, 404);
         }
 
-        $current_date = Carbon::now();
-        $input['date'] = $current_date->toDateString();
-
         $information = Meal::create($input);
-
-        // return response
-        // $response = [
-        //     'success' => true,
-        //     'message' => 'Customer Information created successfully.',
-        // ];
 
         return response()->json(true, 200);
     }
