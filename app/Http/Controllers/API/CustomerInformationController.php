@@ -104,6 +104,9 @@ class CustomerInformationController extends Controller
         $input = $request->all();
         $customer = $request->user();
         $information = CustomerInformation::where('customer_id', $customer->id)->where('date', '<=', $input['date'])->orderBy('date', 'DESC')->latest()->first();
+        if ($information->date != $input['date']) {
+            $information['water'] = 0;
+        }
         
         return CustomerInformationResource::make($information);;
     }

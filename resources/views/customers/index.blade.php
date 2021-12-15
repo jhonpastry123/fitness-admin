@@ -27,9 +27,9 @@
                         <tr>
                             <th class="text-center" style="width: 10%;">No</th>
                             <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                            <th class="d-none d-sm-table-cell" style="width: 10%;">γένος</th>
-                            <th class="d-none d-sm-table-cell" style="width: 20%;">γενέθλια</th>
-                            <th class="d-none d-sm-table-cell" style="width: 20%;">τύπος</th>
+                            <th class="d-none d-sm-table-cell" style="width: 10%;">Membership</th>
+                            <th class="d-none d-sm-table-cell" style="width: 20%;">Purchase_date</th>
+                            <th class="d-none d-sm-table-cell" style="width: 20%;">Available</th>
                             <th class="d-none d-sm-table-cell" style="width: 10%;">δράση</th>
                         </tr>
                     </thead>
@@ -38,9 +38,15 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td class="d-none d-sm-table-cell">{{ $customer->email }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $customer->gender }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $customer->birthday }}</td>
-                            <td class="d-none d-sm-table-cell">{{ $customer->type }}</td>
+                            <td class="d-none d-sm-table-cell">{{ $customer->membership }}</td>
+                            <td class="d-none d-sm-table-cell">{{ $customer->purchase_time }}</td>
+                            <td class="d-none d-sm-table-cell">
+                            @if($customer->available)
+                            <button type="button" class="btn btn-rounded btn-hero-success" data-toggle="click-ripple"><i class="fa fa-check"></i> Available</button>
+                            @else
+                            <button type="button" class="btn btn-rounded btn-hero-warning" data-toggle="click-ripple"><i class="fa fa-times"></i> Expired</button>
+                            @endif
+                            </td>
                             <td class="text-center">
                                 <form id="delete-{{$customer->id}}" action="{{ route('customers.destroy',$customer->id) }}" method="POST">
                                     <div class="btn-group">
