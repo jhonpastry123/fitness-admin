@@ -136,6 +136,7 @@ class CustomerInformationController extends Controller
             $new_info = $information->toArray();
             $new_info['date'] = $date;
             $new_info['diet_mode'] = $dietmode;
+            $new_info['water'] = 0;
             CustomerInformation::create($new_info);
         }
         
@@ -158,6 +159,7 @@ class CustomerInformationController extends Controller
             $new_info = $information->toArray();
             $new_info['date'] = $date;
             $new_info['weight'] = $weight;
+            $new_info['water'] = 0;
             CustomerInformation::create($new_info);
         }
         
