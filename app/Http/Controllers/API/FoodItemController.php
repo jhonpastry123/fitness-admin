@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\FoodItem;
 use App\Models\FoodValue;
 use App\Models\FoodCategory;
+use App\Models\FoodRelation;
 use App\Http\Resources\FoodItem as FoodItemResource;
 use Validator;
 
@@ -22,6 +23,8 @@ class FoodItemController extends Controller
     {
         $query = FoodItem::query();
         $q = $request->get('q');
+        $user_id = $request->get('user_id');
+        $query->where('user_id', $user_id);
         if ($q) {
             $query->where('food_name', 'like', "%$q%");
         }
@@ -64,6 +67,8 @@ class FoodItemController extends Controller
             'fat' => 'required',
             'portion_in_grams' => 'required',
             'kcal' => 'required',
+            'serving_size' => 'required',
+            'serving_prefix' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -75,15 +80,37 @@ class FoodItemController extends Controller
             return response()->json($response, 404);
         }
 
-        FoodItem::create($input);
+        $request->merge([
+            'carbon' => str_replace(',', '.', $request->input('carbon')),
+            'protein' => str_replace(',', '.', $request->input('protein')),
+            'fat' => str_replace(',', '.', $request->input('fat')),
+            'portion_in_grams' => str_replace(',', '.', $request->input('portion_in_grams')),
+            'kcal' => str_replace(',', '.', $request->input('kcal')),
+            'serving_size' => str_replace(',', '.', $request->input('serving_size')),
+        ]);
+
+        $food = FoodItem::create($request->all());
+        
+        $categories = str_replace("[", "", $request->food_categories_id);
+        $categories = str_replace("]", "", $categories);
+        $categories = array_map('intval', explode(', ', $categories));
+
+        foreach ($categories as $key => $category) {
+            FoodRelation::create([
+                'food_item_id' => $food->id,
+                'food_category_id' => $category
+            ]);
+        }
 
         // return response
-        $response = [
-            'success' => true,
-            'message' => 'FoodItem created successfully.',
-        ];
+        // $response = [
+        //     'success' => true,
+        //     'message' => 'FoodItem created successfully.',
+        // ];
 
-        return response()->json($response, 200);
+        // return response()->json($response, 200);
+
+        return response()->json(true, 200);
     }
 
     /**

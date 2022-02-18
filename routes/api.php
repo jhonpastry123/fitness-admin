@@ -19,6 +19,7 @@ Route::resource('fooditems', 'API\FoodItemController');
 Route::get('recipes/list', 'API\RecipeController@list');
 Route::resource('recipes', 'API\RecipeController');
 Route::resource('categories', 'API\CategoryController');
+Route::resource('food_categories', 'API\FoodCategoryController');
 Route::resource('sports', 'API\SportController');
 
 Route::middleware('auth:api')->group(function () {

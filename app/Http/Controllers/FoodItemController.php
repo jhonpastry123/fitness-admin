@@ -105,6 +105,7 @@ class FoodItemController extends Controller
                 'food_category_id' => $category
             ]);
         }
+        
 
         return  redirect()->route('fooditems.index')
                 ->with('success','FoodItem created successfully.');

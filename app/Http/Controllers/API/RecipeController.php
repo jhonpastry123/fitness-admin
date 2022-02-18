@@ -23,11 +23,12 @@ class RecipeController extends Controller
     {
         $query = Recipe::query();
         $category = $request->get('category');
+        $user_id = $request->get('user_id');
         $q = $request->get('q');
         if ($q) {
             $query->where('title', 'like', "%$q%");
         }
-        $query->where('categories_id', $category);
+        $query->where('categories_id', $category)->where('user_id', $user_id);
         $recipes = $query->latest()->paginate();
 
         foreach ($recipes as $key => $recipe) {
@@ -81,47 +82,40 @@ class RecipeController extends Controller
         $validator = Validator::make($input, [
             'title' => 'required',
             'categories_id' => 'required',
-            'description' => 'required',
-            'image' => 'required',
+            'user_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             // return response
-            $response = [
-                'success' => false,
-                'message' => 'Validation Error.', $validator->errors(),
-            ];
-            return response()->json($response, 404);
+            return response()->json(false, 200);
         }
-
-        $image = base64_encode($request->image);
 
         $recipe = Recipe::create([
             'title' => $request->title,
             'categories_id' => $request->categories_id,
-            'description' => $request->description,
-            'image' => $image,
+            'description' => "",
+            'image' => "",
+            'user_id' => $request->user_id
         ]);
 
-        $food_id = explode(",", $request->food_id);
-        $food_amount = explode(",", $request->food_amount);
+        $food_id = str_replace("[", "", $request->food_id);
+        $food_id = str_replace("]", "", $food_id);
+        $food_id = array_map('intval', explode(', ', $food_id));
 
-        for ($i = 0; $i < count($food_id); $i++) {
+        $food_amount = str_replace("[", "", $request->food_amount);
+        $food_amount = str_replace("]", "", $food_amount);
+        $food_amount = array_map('intval', explode(', ', $food_amount));
+
+        for ($i=0; $i < count($food_id); $i++) {
             # code...
             FoodValue::create([
                 'recipes_id' => $recipe->id,
                 'food_items_id' => $food_id[$i],
-                'amount' => $food_amount[$i]
+                'amount' => str_replace(',', '.', $food_amount[$i])
             ]);
         }
 
-        // return response
-        $response = [
-            'success' => true,
-            'message' => 'Recipe created successfully.',
-        ];
-
-        return response()->json($response, 200);
+        return response()->json(true, 200);
     }
 
     /**
