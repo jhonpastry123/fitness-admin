@@ -8,7 +8,7 @@ class FoodItem extends Model
 {
     //
     protected $fillable = [
-        'food_name', 'carbon', 'protein', 'fat', 'portion_in_grams', 'kcal', 'serving_size', 'serving_prefix'
+        'food_name', 'carbon', 'protein', 'fat', 'portion_in_grams', 'kcal', 'serving_size', 'serving_prefix', 'user_id', 'barcode'
     ];
 
     public function foodRelations() {

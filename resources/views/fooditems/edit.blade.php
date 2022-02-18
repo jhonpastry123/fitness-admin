@@ -96,13 +96,13 @@
                                 <label for="name" class="col-sm-4">Επέλεξε πρόθεμα:</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" id="serving_prefix" name="serving_prefix" style="width: 100%;" data-placeholder="Επέλεξε πρόθεμα...">
-                                        <option value="τεμάχιο">1 τεμάχιο/ια</option>
-                                        <option value="φλυτζάνι">1 φλιτζάνι/ια</option>
-                                        <option value="κουταλιά σουπας">1 κουταλιά/ες σούπας</option>
-                                        <option value="κουταλιά γλυκού">1 κουταλάκι/ια γλυκού</option>
-                                        <option value="μερίδα">1 μερίδα/ες</option>
-                                        <option value="φέτα">1 φέτα/ες</option>
-                                        <option value="μέτριο">1 μέτριο/ια</option>
+                                        <option value="τεμάχιο/ια">1 τεμάχιο/ια</option>
+                                        <option value="φλιτζάνι/ια">1 φλιτζάνι/ια</option>
+                                        <option value="κουταλιά/ες σούπας">1 κουταλιά/ες σούπας</option>
+                                        <option value="κουταλάκι/ια γλυκού">1 κουταλάκι/ια γλυκού</option>
+                                        <option value="μερίδα/ες">1 μερίδα/ες</option>
+                                        <option value="φέτα/ες">1 φέτα/ες</option>
+                                        <option value="μέτριο/ια">1 μέτριο/ια</option>
                                     </select>
                                 </div>
                             </div>
