@@ -34,7 +34,7 @@ class RecipeController extends Controller
     {
         //
         $categories = Category::latest()->get();
-        $fooditems = FoodItem::latest()->get();
+        $fooditems = FoodItem::where('user_id', 0)->latest()->get();
 
         return view('recipes.create', compact('categories', 'fooditems'));
     }
@@ -64,6 +64,7 @@ class RecipeController extends Controller
             'categories_id' => $request->categories_id,
             'description' => $request->description,
             'image' => $imageName,
+            'user_id' => 0
         ]);
 
         $food_id = explode(",", $request->food_id);
@@ -108,7 +109,7 @@ class RecipeController extends Controller
     {
         //
         $categories = Category::latest()->get();
-        $fooditems = FoodItem::latest()->get();
+        $fooditems = FoodItem::where('user_id', 0)->latest()->get();
         $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
 
         return view('recipes.edit',compact('recipe', 'categories', 'fooditems', 'foodvalues'));
