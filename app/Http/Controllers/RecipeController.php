@@ -19,7 +19,7 @@ class RecipeController extends Controller
     public function index()
     {
         //
-        $recipes = Recipe::latest()->paginate(5);
+        $recipes = Recipe::where('user_id', 0)->latest()->paginate(5);
 
         return  view('recipes.index', compact('recipes'))
                 ->with('i', (request()->input('page', 1) - 1) * 5);

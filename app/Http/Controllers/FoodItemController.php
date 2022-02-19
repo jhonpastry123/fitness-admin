@@ -27,10 +27,10 @@ class FoodItemController extends Controller
                     }
                 }]    
             ])
-            ->get();
+            ->where('user_id', 0)->get();
         }
         else {
-            $fooditems = FoodItem::latest()->paginate(10);
+            $fooditems = FoodItem::where('user_id', 0)->latest()->paginate(10);
         }
 
         foreach ($fooditems as $key => $fooditem) {
