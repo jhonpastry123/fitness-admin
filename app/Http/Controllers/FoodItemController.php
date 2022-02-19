@@ -94,6 +94,8 @@ class FoodItemController extends Controller
             'portion_in_grams' => str_replace(',', '.', $request->input('portion_in_grams')),
             'kcal' => str_replace(',', '.', $request->input('kcal')),
             'serving_size' => str_replace(',', '.', $request->input('serving_size')),
+            'user_id' => 0,
+            'barcode' => ''
         ]);
         
         $food = FoodItem::create($request->all());
