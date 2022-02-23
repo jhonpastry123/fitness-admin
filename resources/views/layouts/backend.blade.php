@@ -383,7 +383,7 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="page-header-user-dropdown">
                             <div class="bg-primary-darker rounded-top font-w600 text-white text-center p-3">
-                                Επιλογές χρήστη
+                                Ρυθμίσεις
                             </div>
                             <div class="p-2">
                                 <a class="dropdown-item" href="{{ route('logout')}}">

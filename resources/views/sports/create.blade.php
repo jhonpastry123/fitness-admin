@@ -5,7 +5,7 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Πρόσθεσε Νέο Άθλημα</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Δημιουργία νέου Αθλήματος</h1>
         </div>
     </div>
 </div>
@@ -16,7 +16,7 @@
     <!-- Your Block -->
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Πρόσθεσε Νέο Άθλημα</h3>
+            <h3 class="block-title">Δημιουργία νέου Αθλήματος</h3>
             <div class="block-options">
                 <div class="pull-right">
                     <a class="btn btn-primary" href="{{ route('sports.index') }}"> Πίσω</a>
@@ -41,7 +41,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2">Όνομα:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Sport Name...">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Πληκτρολόγησε όνομα αθλήματος..">
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                         <div class="form-group row">
                             <label for="coefficient" class="col-sm-2">Συντελεστής:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="coefficient" name="coefficient" placeholder="Enter Sport Coefficient...">
+                                <input type="text" class="form-control" id="coefficient" name="coefficient" placeholder="Πληκτρολόγησε συντελεστή αθλήματος..">
                             </div>
                         </div>
                     </div>

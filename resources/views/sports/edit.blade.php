@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-2">Όνομα Αθλήματος:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" name="name" value="{{ $sport->name }}" placeholder="Enter Sport Name...">
+                                <input type="text" class="form-control" id="name" name="name" value="{{ $sport->name }}" placeholder="Πληκτρολόγησε όνομα αθλήματος..">
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="form-group row">
                             <label for="coefficient" class="col-sm-2">Συντελεστής:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="coefficient" name="coefficient" value="{{ $sport->coefficient }}" placeholder="Enter Sport Coefficient...">
+                                <input type="text" class="form-control" id="coefficient" name="coefficient" value="{{ $sport->coefficient }}" placeholder="Πληκτρολόγησε συντελεστή αθλήματος..">
                             </div>
                         </div>
                     </div>

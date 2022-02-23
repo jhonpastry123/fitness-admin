@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <label for="name" class="col-sm-4">Τίτλος:</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="title" name="title" value="{{$recipe->title}}" placeholder="Enter Title...">
+                                <input type="text" class="form-control" id="title" name="title" value="{{$recipe->title}}" placeholder="Γράψτε έναν τίτλο...">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -65,7 +65,7 @@
                             <label for="image" class="col-sm-4">Εικόνα:</label>
                             <div class="col-sm-8">
                                 <img src="{{ asset('images/'.$recipe->image) }}" width="100" height="100" alt="Recipe" />
-                                <input type="file" name="image" id="image" placeholder="Image">
+                                <input type="file" name="image" id="image" placeholder="Επιλογή Φωτογραφίας">
                             </div>
                         </div>
 

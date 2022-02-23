@@ -42,7 +42,7 @@
                             <div class="form-group row">
                                 <label for="name" class="col-sm-2">Όνομα:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $foodcategory->name }}" placeholder="Enter Food Category Name...">
+                                    <input type="text" class="form-control" id="name" name="name" value="{{ $foodcategory->name }}" placeholder="Πληκτρολογήστε το όνομα της κατηγορίας...">
                                 </div>
                             </div>
                         </div>

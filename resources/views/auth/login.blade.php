@@ -139,6 +139,15 @@
                                 </div>
                                 <!-- END Sign In Form -->
                             </div>
+                            
+                            
+                            <div class="content py-0" style="position: absolute; bottom: 15px;">
+                                <div class="row font-size-sm">
+                                    <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0">
+                                        Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600" href="https://www.qsa.gr" target="_blank">QSA</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- END Main Section -->
 

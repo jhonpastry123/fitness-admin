@@ -42,7 +42,7 @@
                             <div class="form-group row">
                                 <label for="food_categories_id" class="col-sm-4">Κατηγορία:</label>
                                 <div class="col-sm-8">
-                                    <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Choose many.." multiple>
+                                    <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Επέλεξε κατηγορία.." multiple>
                                         <option></option>
                                         @foreach($foodcategories as $foodcategory)
                                             <option value="{{$foodcategory->id}}" <?php if(in_array($foodcategory->id, $fooditem->category_ids)) echo "selected"?>>{{$foodcategory->name}}</option>
@@ -53,43 +53,43 @@
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Όνομα Τροφής:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="food_name" name="food_name" value="{{ $fooditem->food_name }}" placeholder="Enter Food Name...">
+                                    <input type="text" class="form-control" id="food_name" name="food_name" value="{{ $fooditem->food_name }}" placeholder="Πληκτρολόγησε το όνομα...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Υδατάνθρακες (carbs):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="carbon" name="carbon" value="{{ $fooditem->carbon }}" placeholder="Enter Carbon...">
+                                    <input type="text" class="form-control" id="carbon" name="carbon" value="{{ $fooditem->carbon }}" placeholder="Πληκτρολόγησε τους υδατάνθρακες...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Πρωτεΐνες (proteins):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="protein" name="protein" value="{{ $fooditem->protein }}" placeholder="Enter Protein...">
+                                    <input type="text" class="form-control" id="protein" name="protein" value="{{ $fooditem->protein }}" placeholder="Πληκτρολόγησε την πρωτεΐνη...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Λιπαρά (fat):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="fat" name="fat" value="{{ $fooditem->fat }}" placeholder="Enter Fat...">
+                                    <input type="text" class="form-control" id="fat" name="fat" value="{{ $fooditem->fat }}" placeholder="Πληκτρολόγησε τα λιπαρά...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Γραμμάρια (g):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="portion_in_grams" name="portion_in_grams" value="{{ $fooditem->portion_in_grams }}" placeholder="Enter Portion In Grams...">
+                                    <input type="text" class="form-control" id="portion_in_grams" name="portion_in_grams" value="{{ $fooditem->portion_in_grams }}" placeholder="Πληκτρολόγησε τα γραμμάρια...">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Kcal:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="kcal" name="kcal" value="{{ $fooditem->kcal }}" placeholder="Enter Portion In Kcal...">
+                                    <input type="text" class="form-control" id="kcal" name="kcal" value="{{ $fooditem->kcal }}" placeholder="Πληκτρολόγησε Kcal..">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Μερίδα (grams):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="serving_size" name="serving_size" value="{{ $fooditem->serving_size }}" placeholder="Εισαγάγετε το Μερίδα...">
+                                    <input type="text" class="form-control" id="serving_size" name="serving_size" value="{{ $fooditem->serving_size }}" placeholder="Πληκτρολόγησε τη μερίδα σε γραμμάρια..">
                                 </div>
                             </div>
                             <div class="form-group row">

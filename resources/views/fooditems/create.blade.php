@@ -42,7 +42,7 @@
                                 <label for="food_categories_id" class="col-sm-4">Κατηγορία:</label>
                                 <div class="col-sm-8">
                                     <div class="form-group">
-                                        <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Choose many.." multiple>
+                                        <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Επέλεξε κατηγορία.." multiple>
                                             <option></option>
                                             @foreach($foodcategories as $foodcategory)
                                                 <option value="{{$foodcategory->id}}">{{$foodcategory->name}}</option>
@@ -84,13 +84,13 @@
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Kcal:</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="kcal" name="kcal" placeholder="Εισαγάγετε το Kcal...">
+                                    <input type="text" class="form-control" id="kcal" name="kcal" placeholder="Πληκτρολόγησε Kcal..">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-sm-4">Μερίδα (grams):</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="serving_size" name="serving_size" placeholder="Εισαγάγετε το Μερίδα...">
+                                    <input type="text" class="form-control" id="serving_size" name="serving_size" placeholder="Πληκτρολόγησε τη μερίδα σε γραμμάρια..">
                                 </div>
                             </div>
                             <div class="form-group row">
