@@ -39,7 +39,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xs-8 col-sm-8 col-md-8">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-2">Όνομα:</label>
+                            <label for="name" class="col-sm-2">Όνομα Αθλήματος:</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Πληκτρολόγησε όνομα αθλήματος..">
                             </div>

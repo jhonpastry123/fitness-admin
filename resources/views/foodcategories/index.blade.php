@@ -19,7 +19,7 @@
                 <h3 class="block-title">Λίστα Κατηγοριών Τροφίμων</h3>
                 <div class="block-options">
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('foodcategories.create') }}" data-toggle="tooltip" title="Create">
+                        <a class="btn btn-primary" href="{{ route('foodcategories.create') }}" data-toggle="tooltip" title="Δημιουργία">
                             <i class="fa fa-plus"></i>
                         </a>
                     </div>
@@ -37,7 +37,7 @@
                             <tr>
                                 <th class="text-center" style="width: 10%;">No</th>
                                 <th class="d-none d-sm-table-cell" style="width: 70%;">Όνομα</th>
-                                <th class="d-none d-md-table-cell text-center" style="width: 20%;">Ενέργειες</th>
+                                <th class="d-none d-md-table-cell text-center" style="width: 20%;">Διαχείριση</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,16 +48,16 @@
                                 <td class="text-center">
                                     <form action="{{ route('foodcategories.destroy',$foodcategory->id) }}" method="POST">
                                         <div class="btn-group">
-                                            <a class="btn btn-success" href="{{ route('foodcategories.show',$foodcategory->id) }}" data-toggle="tooltip" title="Show">
+                                            <a class="btn btn-success" href="{{ route('foodcategories.show',$foodcategory->id) }}" data-toggle="tooltip" title="Επισκόποηση">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a class="btn btn-primary" href="{{ route('foodcategories.edit',$foodcategory->id) }}"  data-toggle="tooltip" title="Edit">
+                                            <a class="btn btn-primary" href="{{ route('foodcategories.edit',$foodcategory->id) }}"  data-toggle="tooltip" title="Επεξεργασία">
                                                 <i class="fa fa-pencil-alt"></i>
                                             </a>
                                             @csrf
                                             @method('DELETE')
 
-                                            <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Delete">
+                                            <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Διαγραφή">
                                                 <i class="fa fa-times"></i>
                                             </button>
                                         </div>

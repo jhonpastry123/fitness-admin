@@ -18,7 +18,7 @@
             <h3 class="block-title">Λίστα  Έτοιμα Γεύματα</h3>
             <div class="block-options">
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('recipes.create') }}" data-toggle="tooltip" title="Create">
+                    <a class="btn btn-primary" href="{{ route('recipes.create') }}" data-toggle="tooltip" title="Δημιουργία">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -39,7 +39,7 @@
                             <th class="d-none d-sm-table-cell" style="width: 20%;">Τίτλος</th>
                             <th class="d-none d-sm-table-cell" style="width: 20%;">Κατηγορία</th>
                             <th class="d-none d-sm-table-cell" style="width: 20%;">Περιγραφή</th>
-                            <th class="d-none d-md-table-cell text-center" style="width: 20%;">Ενέργειες</th>
+                            <th class="d-none d-md-table-cell text-center" style="width: 20%;">Διαχείριση</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,16 +55,16 @@
                             <td class="text-center">
                                 <form id="delete-{{$recipe->id}}" action="{{ route('recipes.destroy',$recipe->id) }}" method="POST">
                                     <div class="btn-group">
-                                        <a class="btn btn-success" href="{{ route('recipes.show',$recipe->id) }}" data-toggle="tooltip" title="Show">
+                                        <a class="btn btn-success" href="{{ route('recipes.show',$recipe->id) }}" data-toggle="tooltip" title="Επισκόποηση">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-primary" href="{{ route('recipes.edit',$recipe->id) }}" data-toggle="tooltip" title="Edit">
+                                        <a class="btn btn-primary" href="{{ route('recipes.edit',$recipe->id) }}" data-toggle="tooltip" title="Επεξεργασία">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>
                                         @csrf
                                         @method('DELETE')
 
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$recipe->id}}" title="Delete">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$recipe->id}}" title="Διαγραφή">
                                             <i class="fa fa-times"></i>
                                         </button>
 
@@ -72,17 +72,17 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title"><i class="fa fa-check"></i>Warning</h5>
+                                                        <h5 class="modal-title"><i class="fa fa-check"></i>Προειδοποίηση</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body pb-1">
-                                                        <p>Are you sure to delete this <span class="text-info">Recipe</span>?</p>
+                                                        <p>Σίγουρα θέλεις να διαγράψεις το <span class="text-info">γεύμα</span>?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-sm btn-primary confirm" data-id="{{$recipe->id}}">Yes</button>
-                                                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-sm btn-primary confirm" data-id="{{$recipe->id}}">Ναί</button>
+                                                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Οχι</button>
                                                     </div>
                                                 </div>
                                             </div>

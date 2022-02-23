@@ -158,7 +158,7 @@
                                     Πίνακας Διαχείρισης
                                 </p>
                                 <p class="font-size-lg font-w600 text-white-75 mb-0">
-                                    Trinity App  <span data-toggle="year-copy">2020</span>
+                                    Trinity App  <span data-toggle="year-copy"></span>
                                 </p>
                             </div>
                         </div>

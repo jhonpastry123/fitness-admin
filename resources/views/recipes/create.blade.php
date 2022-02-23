@@ -109,7 +109,7 @@
         $("#add").click(function() {
             $(this).before(
                 '<div class="food-menu row mb-2">\
-                        <label class="col-sm-3">Food:</label>\
+                        <label class="col-sm-3">Τρόφιμο:</label>\
                         <div class="col-sm-4 id-div">\
                             <select name="food-id" id="food-id-' + i + '" class="form-control">\
                                 @foreach($fooditems as $fooditem)\
@@ -118,7 +118,7 @@
                             </select>\
                         </div>\
                         <div class="col-sm-4 amount-div">\
-                            <input type="text" name="food-amount" id="food-amount" class="form-control" placeholder="Amount">\
+                            <input type="text" name="food-amount" id="food-amount" class="form-control" placeholder="Ποσότητα(γρ)">\
                         </div>\
                         <div class="col-sm-1">\
                             <button class="btn btn-danger" id="delete" onclick="deleteTag(this)"><i class="fa fa-times"></i></button>\

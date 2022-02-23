@@ -19,7 +19,7 @@
             <h3 class="block-title">Λίστα Αθλημάτων</h3>
             <div class="block-options">
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('sports.create') }}" data-toggle="tooltip" title="Create">
+                    <a class="btn btn-primary" href="{{ route('sports.create') }}" data-toggle="tooltip" title="Δημιουργία">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -38,7 +38,7 @@
                             <th class="text-center" style="width: 10%;">No</th>
                             <th class="d-none d-sm-table-cell" style="width: 35%;">Όνομα Αθλήματος</th>
                             <th class="d-none d-sm-table-cell" style="width: 35%;">Συντελεστής</th>
-                            <th class="d-none d-md-table-cell text-center" style="width: 20%;">Ενέργειες</th>
+                            <th class="d-none d-md-table-cell text-center" style="width: 20%;">Διαχείριση</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +51,7 @@
                             <td class="text-center">
                                 <form action="{{ route('sports.destroy',$sport->id) }}" method="POST">
                                     <div class="btn-group">
-                                        <a class="btn btn-success" href="{{ route('sports.show',$sport->id) }}" data-toggle="tooltip" title="Προβολη">
+                                        <a class="btn btn-success" href="{{ route('sports.show',$sport->id) }}" data-toggle="tooltip" title="Επισκόποηση">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-primary" href="{{ route('sports.edit',$sport->id) }}" data-toggle="tooltip" title="Επεξεργασία">

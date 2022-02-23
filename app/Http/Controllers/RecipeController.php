@@ -83,7 +83,7 @@ class RecipeController extends Controller
         }
 
         return  redirect()->route('recipes.index')
-                ->with('success','Recipe created successfully.');
+                ->with('success','Το γεύμα δημιουργήθηκε επιτυχώς!');
     }
 
     /**
@@ -172,7 +172,7 @@ class RecipeController extends Controller
         }
 
         return  redirect()->route('recipes.index')
-                ->with('success','Recipe updated successfully.');
+                ->with('success','Το γευμα ενημερώθηκε επιτυχώς!');
     }
 
     /**
@@ -194,6 +194,6 @@ class RecipeController extends Controller
         $recipe->delete();
 
         return  redirect()->route('recipes.index')
-                ->with('success','Recipe deleted successfully');
+                ->with('success','Το γεύμα διαγράφηκε επιτυχώς!');
     }
 }

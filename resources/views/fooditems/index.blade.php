@@ -17,7 +17,7 @@
             <h3 class="block-title">Λίστα Τροφίμων</h3>
             <div class="block-options">
                 <div class="pull-right">
-                    <a class="btn btn-primary" href="{{ route('fooditems.create') }}" data-toggle="tooltip" title="Create">
+                    <a class="btn btn-primary" href="{{ route('fooditems.create') }}" data-toggle="tooltip" title="Δημιουργία">
                         <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -28,14 +28,14 @@
                 <form action="{{ route('fooditems.index') }}" method="GET" role="search" style="width:fit-content;">
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <button class="btn btn-info" type="submit" title="Search foods">
+                            <button class="btn btn-info" type="submit" title="Αναζήτηση τροφίμων">
                                 <span class="fas fa-search"></span>
                             </button>
                         </span>
-                        <input type="text" class="form-control" name="search" placeholder="Search foods" id="search" value="{{ $search }}">
+                        <input type="text" class="form-control" name="search" placeholder="Αναζήτηση τροφίμων" id="search" value="{{ $search }}">
                         <a href="{{ route('fooditems.index') }}">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                <button class="btn btn-danger" type="button" title="Ανανέωση Σελίδας">
                                     <span class="fas fa-sync-alt"></span>
                                 </button>
                             </span>
@@ -77,10 +77,10 @@
                             <td class="text-center">
                                 <form id="delete-{{$foodItem->id}}" action="{{ route('fooditems.destroy',$foodItem->id) }}" method="POST">
                                     <div class="btn-group">
-                                        <a class="btn btn-success" href="{{ route('fooditems.show',$foodItem->id) }}" data-toggle="tooltip" title="Show">
+                                        <a class="btn btn-success" href="{{ route('fooditems.show',$foodItem->id) }}" data-toggle="tooltip" title="Επισκόποηση">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-primary" href="{{ route('fooditems.edit',$foodItem->id) }}" data-toggle="tooltip" title="Edit">
+                                        <a class="btn btn-primary" href="{{ route('fooditems.edit',$foodItem->id) }}" data-toggle="tooltip" title="Επεξεργασία">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>
                                         @csrf
@@ -89,7 +89,7 @@
                                         <button type="submit" class="btn btn-danger" data-toggle="modal" data-id="{{$foodItem->id}}" title="Delete">
                                             <i class="fa fa-times"></i>
                                         </button> -->
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$foodItem->id}}" title="Delete">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$foodItem->id}}" title="Διαγραφή">
                                             <i class="fa fa-times"></i>
                                         </button>
                                         <!-- Normal Default Modal -->
@@ -97,17 +97,17 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title"><i class="fa fa-check"></i>Warning</h5>
+                                                        <h5 class="modal-title"><i class="fa fa-check"></i>Προειδοποίηση</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body pb-1">
-                                                        <p>Are you sure to delete this <span class="text-info">Food item</span>?</p>
+                                                        <p>Είστε βέβαιοι ότι θέλετε να διαγράψετε το <span class="text-info">τρόφιμο</span>?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" id="confirm" class="btn btn-sm btn-primary confirm" data-id="{{$foodItem->id}}">Yes</button>
-                                                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">No</button>
+                                                        <button type="button" id="confirm" class="btn btn-sm btn-primary confirm" data-id="{{$foodItem->id}}">Ναί</button>
+                                                        <button type="button" class="btn btn-sm btn-light" data-dismiss="modal">Οχι</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -56,7 +56,7 @@ class SportController extends Controller
         Sport::create($request->all());
 
         return  redirect()->route('sports.index')
-            ->with('success', 'Sport created successfully.');
+            ->with('success', 'Το άθλημα δημιουργήθηκε επιτυχώς!');
     }
 
     /**
@@ -105,7 +105,7 @@ class SportController extends Controller
         $sport->update($request->all());
 
         return  redirect()->route('sports.index')
-            ->with('success', 'Sport updated successfully');
+            ->with('success', 'Το άθλημα ενημερώθηκε επιτυχώς!');
     }
 
     /**
@@ -120,6 +120,6 @@ class SportController extends Controller
         $sport->delete();
 
         return  redirect()->route('sports.index')
-            ->with('success', 'Sport deleted successfully');
+            ->with('success', 'Το άθλημα διαγράφηκε επιτυχώς!');
     }
 }

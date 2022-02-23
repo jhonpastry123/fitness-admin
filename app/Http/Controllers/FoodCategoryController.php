@@ -50,7 +50,7 @@ class FoodCategoryController extends Controller
         FoodCategory::create($request->all());
 
         return  redirect()->route('foodcategories.index')
-                ->with('success','Food Category created successfully.');
+                ->with('success','Η κατηγορία τροφίμου δημιουργήθηκε επιτυχώς!');
     }
 
     /**
@@ -94,7 +94,7 @@ class FoodCategoryController extends Controller
         $foodcategory->update($request->all());
 
         return  redirect()->route('foodcategories.index')
-                ->with('success','Food Category updated successfully');
+                ->with('success','Η κατηγορία τροφίμου ενημερώθηκε επιτυχώς!');
     }
 
     /**
@@ -123,6 +123,6 @@ class FoodCategoryController extends Controller
         $foodcategory->delete();
 
         return  redirect()->route('foodcategories.index')
-                ->with('success','Food Category deleted successfully');
+                ->with('success','Η κατηγορία τροφίμου διαγράφηκε επιτυχώς!');
     }
 }

@@ -6,7 +6,7 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Πελάτες</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Διαχείριση Πελατών</h1>
         </div>
     </div>
 </div>
@@ -16,7 +16,7 @@
     <!-- Your Block -->
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Πελάτες Λίστα</h3>
+            <h3 class="block-title">Λίστα Πελατών</h3>
 
         </div>
         <div class="block-content">
@@ -27,10 +27,10 @@
                         <tr>
                             <th class="text-center" style="width: 10%;">No</th>
                             <th class="d-none d-sm-table-cell" style="width: 30%;">Email</th>
-                            <th class="d-none d-sm-table-cell" style="width: 10%;">Membership</th>
-                            <th class="d-none d-sm-table-cell" style="width: 20%;">Purchase_date</th>
-                            <th class="d-none d-sm-table-cell" style="width: 20%;">Available</th>
-                            <th class="d-none d-sm-table-cell" style="width: 10%;">δράση</th>
+                            <th class="d-none d-sm-table-cell" style="width: 10%;">Συνδρομή</th>
+                            <th class="d-none d-sm-table-cell" style="width: 20%;">Ημερομηνία Αγοράς</th>
+                            <th class="d-none d-sm-table-cell" style="width: 20%;">Κατάσταση</th>
+                            <th class="d-none d-sm-table-cell" style="width: 10%;">Διαγραφή</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,9 +42,9 @@
                             <td class="d-none d-sm-table-cell">{{ $customer->purchase_time }}</td>
                             <td class="d-none d-sm-table-cell">
                             @if($customer->available)
-                            <button type="button" class="btn btn-rounded btn-hero-success" data-toggle="click-ripple"><i class="fa fa-check"></i> Available</button>
+                            <button type="button" class="btn btn-rounded btn-hero-success" data-toggle="click-ripple"><i class="fa fa-check"></i> Ενεργό</button>
                             @else
-                            <button type="button" class="btn btn-rounded btn-hero-warning" data-toggle="click-ripple"><i class="fa fa-times"></i> Expired</button>
+                            <button type="button" class="btn btn-rounded btn-hero-warning" data-toggle="click-ripple"><i class="fa fa-times"></i> Σε Λήξη</button>
                             @endif
                             </td>
                             <td class="text-center">
@@ -52,7 +52,7 @@
                                     <div class="btn-group">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$customer->id}}" title="Delete">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-block-normal-{{$customer->id}}" title="Διαγραφή">
                                             <i class="fa fa-times"></i>
                                         </button>
 
@@ -66,7 +66,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body pb-1">
-                                                        <p>Είστε βέβαιοι ότι θα διαγράψετε αυτές τις πληροφορίες;?</p>
+                                                        <p>Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτές τις πληροφορίες?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-sm btn-primary confirm" data-id="{{$customer->id}}">Ναί</button>

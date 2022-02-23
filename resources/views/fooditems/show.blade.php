@@ -5,7 +5,7 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Show FoodItem</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Επισκόπηση Τρόφιμου</h1>
             </div>
         </div>
     </div>
@@ -16,10 +16,10 @@
         <!-- Your Block -->
         <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Show FoodItem</h3>
+                <h3 class="block-title">Επισκόπηση Τρόφιμου</h3>
                 <div class="block-options">
                     <div class="pull-right">
-                        <a class="btn btn-primary" href="{{ route('fooditems.index') }}"> Back</a>
+                        <a class="btn btn-primary" href="{{ route('fooditems.index') }}"> Πίσω</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         <div class="form-group row">
                             <label for="food_categories_id" class="col-sm-4">Κατηγορία:</label>
                             <div class="col-sm-8">
-                                <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Choose many.." multiple>
+                                <select class="js-select2 form-control" id="food_categories_id" name="food_categories_id[]" style="width: 100%;" data-placeholder="Choose many.." multiple disabled>
                                     <option></option>
                                     @foreach($foodcategories as $foodcategory)
                                         <option value="{{$foodcategory->id}}" <?php if(in_array($foodcategory->id, $fooditem->category_ids)) echo "selected"?>>{{$foodcategory->name}}</option>
@@ -38,13 +38,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-sm-4">Food Name:</label>
+                            <label for="name" class="col-sm-4">Όνομα Τροφίμου:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="food_name" name="food_name" value="{{ $fooditem->food_name }}" readonly placeholder="Enter Food Name...">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-sm-4">Carbon:</label>
+                            <label for="name" class="col-sm-4">Carbs:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="carbon" name="carbon" value="{{ $fooditem->carbon }}" readonly placeholder="Enter Carbon...">
                             </div>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-sm-4">Portion In Grams:</label>
+                            <label for="name" class="col-sm-4">Ποσότητα σε γραμμάρια:</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="portion_in_grams" name="portion_in_grams" value="{{ $fooditem->portion_in_grams }}" readonly placeholder="Enter Portion In Grams...">
                             </div>

@@ -5,7 +5,7 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2"> Έτοιμα Γεύματα</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2"> Επεξεργασία Γεύματος</h1>
         </div>
     </div>
 </div>
@@ -15,7 +15,7 @@
     <!-- Your Block -->
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title"> Έτοιμα Γεύματα</h3>
+            <h3 class="block-title"> Επεξεργασία Γεύματος</h3>
             <div class="block-options">
                 <div class="pull-right">
                     <a class="btn btn-primary" href="{{ route('recipes.index') }}"> Πίσω</a>
@@ -106,7 +106,7 @@
         $("#add").before(
             '@foreach($foodvalues as $foodvalue)\
                     <div class="food-menu row mb-2" data-id="{{$loop->iteration}}">\
-                        <label for="add" class="col-sm-3">Φαγητό:</label>\
+                        <label for="add" class="col-sm-3">Τρόφιμο:</label>\
                         <div class="col-sm-4 id-div">\
                             <select name="food-id" id="food-id-{{$loop->iteration}}" class="form-control">\
                                 @foreach($fooditems as $fooditem)\
@@ -115,7 +115,7 @@
                             </select>\
                         </div>\
                         <div class="col-sm-4 amount-div">\
-                            <input type="text" name="food-amount" id="food-amount" value="{{$foodvalue->amount}}" class="form-control" placeholder="Amount">\
+                            <input type="text" name="food-amount" id="food-amount" value="{{$foodvalue->amount}}" class="form-control" placeholder="Ποσότητα">\
                         </div>\
                         <div class="col-sm-1">\
                             <button class="btn btn-danger" onclick="deleteTag(this)"><i class="fa fa-times"></i></button>\
@@ -140,7 +140,7 @@
                             </select>\
                         </div>\
                         <div class="col-sm-4 amount-div">\
-                            <input type="text" name="food-amount" id="food-amount" class="form-control" placeholder="Amount">\
+                            <input type="text" name="food-amount" id="food-amount" class="form-control" placeholder="Ποσότητα">\
                         </div>\
                         <div class="col-sm-1">\
                             <button class="btn btn-danger" onclick="deleteTag(this)"><i class="fa fa-times"></i></button>\

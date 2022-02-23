@@ -110,7 +110,7 @@ class FoodItemController extends Controller
         
 
         return  redirect()->route('fooditems.index')
-                ->with('success','FoodItem created successfully.');
+                ->with('success','Το τρόφιμο δημιουργήθηκε με επιτυχία!');
     }
 
     /**
@@ -196,7 +196,7 @@ class FoodItemController extends Controller
 
 
         return  redirect()->route('fooditems.index')
-                ->with('success','FoodItem updated successfully.');
+                ->with('success','Το τρόφιμο ενημερώθηκε με επιτυχία!');
     }
 
     /**
@@ -222,6 +222,6 @@ class FoodItemController extends Controller
         $fooditem->delete();
 
         return  redirect()->route('fooditems.index')
-                ->with('success','FoodItem deleted successfully');
+                ->with('success','Το τρόφιμο διαγράφηκε με επιτυχία!');
     }
 }
