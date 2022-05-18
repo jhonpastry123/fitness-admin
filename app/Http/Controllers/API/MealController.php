@@ -167,6 +167,7 @@ class MealController extends Controller
                                 $fruit_num ++;
                                 break;
                             case 7:
+                            case 9:
                             case 11:
                             case 13:
                                 $meat_num ++;
