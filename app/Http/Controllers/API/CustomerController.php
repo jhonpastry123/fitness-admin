@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Password;
 use App\Http\Resources\Customer as CustomerResource;
 use App\Models\Customer;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Validator;
 
 class CustomerController extends Controller
@@ -18,6 +18,27 @@ class CustomerController extends Controller
     {
         $this->middleware('guest:customer')->except('logout');
     }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('customer');
+    }
+
+    /**
+     * Returns the password broker for admins
+     *
+     * @return broker
+     */
+    protected function broker()
+    {
+        return Password::broker('customers');
+    }
+
     /**
      * Customer Register
      */
@@ -93,14 +114,16 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             return response(['success' => false, 'errors' => $validator->errors()->all()], 422);
         }
-        $response = Password::sendResetLink($input);
-        if ($response == Password::RESET_LINK_SENT) {
+        $status = $this->broker()->sendResetLink($input);
+        if ($status === Password::RESET_LINK_SENT) {
+            $success = true;
             $message = "Mail send successfully";
         } else {
+            $success = false;
             $message = "Email could not be sent to this email address";
         }
         //$message = $response == Password::RESET_LINK_SENT ? 'Mail send successfully' : GLOBAL_SOMETHING_WANTS_TO_WRONG;
-        $response = ['success' => true, 'message' => $message];
+        $response = ['success' => $success, 'message' => $message];
         return response($response, 200);
 
     }
