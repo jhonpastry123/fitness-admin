@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('register', 'API\CustomerController@register');
 Route::post('login', 'API\CustomerController@login');
+Route::post('reset_password', 'API\CustomerController@resetPassword');
 Route::resource('fooditems', 'API\FoodItemController');
 Route::get('recipes/list', 'API\RecipeController@list');
 Route::resource('recipes', 'API\RecipeController');

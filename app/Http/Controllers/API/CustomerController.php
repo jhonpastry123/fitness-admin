@@ -5,12 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Customer;
-use Validator;
-use Hash;
-use DateTime;
+use Illuminate\Support\Facades\Password;
 use App\Http\Resources\Customer as CustomerResource;
+use App\Models\Customer;
 use Carbon\Carbon;
+use DateTime;
+use Validator;
 
 class CustomerController extends Controller
 {
@@ -27,14 +27,14 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-            'type' => 'required'
+            'type' => 'required',
         ]);
         $customer = Customer::where("email", $request->email)->get();
         if ($validator->fails() || count($customer) > 0) {
             // return response
             $response = [
                 'success' => false,
-                'token' => ''
+                'token' => '',
             ];
             return response()->json($response, 200);
         }
@@ -51,7 +51,7 @@ class CustomerController extends Controller
         $response = [
             'success' => true,
             'token' => $accessToken,
-            'id' => $Customer->id
+            'id' => $Customer->id,
         ];
         return response()->json($response, 200);
     }
@@ -68,17 +68,41 @@ class CustomerController extends Controller
             $response = [
                 'success' => true,
                 'token' => $accessToken,
-                'id' => $Customer->id
+                'id' => $Customer->id,
             ];
             return response()->json($response, 200);
         } else {
             // return response
             $response = [
                 'success' => false,
-                'token' => ''
+                'token' => '',
             ];
             return response()->json($response, 404);
         }
+    }
+
+    /**
+     * Customer Login
+     */
+    public function resetPassword(Request $request)
+    {
+        $input = $request->only('email');
+        $validator = Validator::make($input, [
+            'email' => "required|email",
+        ]);
+        if ($validator->fails()) {
+            return response(['success' => false, 'errors' => $validator->errors()->all()], 422);
+        }
+        $response = Password::sendResetLink($input);
+        if ($response == Password::RESET_LINK_SENT) {
+            $message = "Mail send successfully";
+        } else {
+            $message = "Email could not be sent to this email address";
+        }
+        //$message = $response == Password::RESET_LINK_SENT ? 'Mail send successfully' : GLOBAL_SOMETHING_WANTS_TO_WRONG;
+        $response = ['success' => true, 'message' => $message];
+        return response($response, 200);
+
     }
 
     public function profile(Request $request)
