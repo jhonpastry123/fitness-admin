@@ -250,7 +250,7 @@ class RecipeController extends Controller
             'message' => 'Recipe deleted successfully.',
         ];
 
-        return response()->json($response, 200);
+        return response()->json(true, 200);
     }
 
     public function list(Request $request)

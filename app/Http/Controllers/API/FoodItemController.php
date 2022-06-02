@@ -186,6 +186,7 @@ class FoodItemController extends Controller
      *
      * @param  \App\Models\FoodItem  $foodItem
      * @return \Illuminate\Http\Response
+     * 
      */
     public function destroy(FoodItem $fooditem)
     {
@@ -204,6 +205,6 @@ class FoodItemController extends Controller
             'message' => 'FoodItem deleted successfully.',
         ];
 
-        return response()->json($response, 200);
+        return response()->json(true, 200);
     }
 }

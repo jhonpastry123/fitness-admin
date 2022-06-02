@@ -29,4 +29,5 @@ Route::resource('foodcategories', 'FoodCategoryController')->middleware('auth');
 Route::resource('fooditems', 'FoodItemController')->middleware('auth');
 Route::resource('recipes', 'RecipeController')->middleware('auth');
 Route::resource('sports', 'SportController')->middleware('auth');
+Route::post('customers/reset_password', 'CustomerController@resetPassword')->middleware('auth')->name("customers.reset");
 Route::resource('customers', 'CustomerController')->middleware('auth');

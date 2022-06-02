@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -58,18 +58,18 @@ class CustomerController extends Controller
                 case 2:
                     $customer['membership'] = "Gold";
                     break;
+                case 3:
+                    $customer['membership'] = "Gold Plus";
+                    break;
                 default:
                     $customer['membership'] = "Free";
                     break;
-            } 
+            }
         }
-        
 
         return view('customers.index', compact('customers'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -82,7 +82,25 @@ class CustomerController extends Controller
         //
         $customer->delete();
 
-        return  redirect()->route('customers.index')
+        return redirect()->route('customers.index')
             ->with('success', 'Customer deleted successfully');
+    }
+
+    /**
+     * Update user password.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function resetPassword(Request $request)
+    {
+        $input = $request->all();
+        $flight = Customer::updateOrCreate(
+            ['email' => $input['email']],
+            ['password' => bcrypt($input['password'])]
+        );
+
+        return redirect()->route('customers.index')
+            ->with('success', 'Customer password updated successfully');
     }
 }
