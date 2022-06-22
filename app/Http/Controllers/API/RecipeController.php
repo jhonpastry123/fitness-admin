@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipe;
-use App\Models\FoodValue;
-use App\Models\Category;
-use App\Models\FoodItem;
-use Illuminate\Http\Request;
-use Validator;
-use Storage;
 use App\Http\Resources\Recipe as RecipeResource;
+use App\Models\FoodItem;
+use App\Models\FoodValue;
+use App\Models\Recipe;
+use Illuminate\Http\Request;
+use Storage;
+use Validator;
 
 class RecipeController extends Controller
 {
@@ -28,7 +27,10 @@ class RecipeController extends Controller
         if ($q) {
             $query->where('title', 'like', "%$q%");
         }
-        $query->where('categories_id', $category)->where('user_id', $user_id);
+        if ($category) {
+            $query->where('categories_id', $category);
+        }
+        $query->where('user_id', $user_id);
         $recipes = $query->latest()->paginate();
 
         foreach ($recipes as $key => $recipe) {
@@ -39,26 +41,28 @@ class RecipeController extends Controller
             foreach ($foodvalues as $key1 => $foodvalue) {
                 $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
 
-                $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
-                if ((($points * 1000) % 100 ) > 75 ) {
-                    $points = ceil($points*10) / 10;
-                } else {
-                    $points = floor($points*10) / 10;
-                }
+                if ($fooditem) {
+                    $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
+                    if ((($points * 1000) % 100) > 75) {
+                        $points = ceil($points * 10) / 10;
+                    } else {
+                        $points = floor($points * 10) / 10;
+                    }
 
-                $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
-                if ((($units * 1000) % 100 ) > 75 ) {
-                    $units = ceil($units*10) / 10;
-                } else {
-                    $units = floor($units*10) / 10;
-                }
-                $fooditem['points'] = $points;
-                $fooditem['units'] = $units;
-                $foodvalues[$key1]['food_item'] = $fooditem;
+                    $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
+                    if ((($units * 1000) % 100) > 75) {
+                        $units = ceil($units * 10) / 10;
+                    } else {
+                        $units = floor($units * 10) / 10;
+                    }
+                    $fooditem['points'] = $points;
+                    $fooditem['units'] = $units;
+                    $foodvalues[$key1]['food_item'] = $fooditem;
 
-                $total_amount += $foodvalue->amount;
-                $total_points += $points;
-                $total_units += $units;
+                    $total_amount += $foodvalue->amount;
+                    $total_points += $points;
+                    $total_units += $units;
+                }
             }
             $recipes[$key]['units'] = $total_units;
             $recipes[$key]['points'] = $total_points;
@@ -95,7 +99,7 @@ class RecipeController extends Controller
             'categories_id' => $request->categories_id,
             'description' => "",
             'image' => "",
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
         ]);
 
         $food_id = str_replace("[", "", $request->food_id);
@@ -106,12 +110,12 @@ class RecipeController extends Controller
         $food_amount = str_replace("]", "", $food_amount);
         $food_amount = array_map('intval', explode(', ', $food_amount));
 
-        for ($i=0; $i < count($food_id); $i++) {
+        for ($i = 0; $i < count($food_id); $i++) {
             # code...
             FoodValue::create([
                 'recipes_id' => $recipe->id,
                 'food_items_id' => $food_id[$i],
-                'amount' => str_replace(',', '.', $food_amount[$i])
+                'amount' => str_replace(',', '.', $food_amount[$i]),
             ]);
         }
 
@@ -135,17 +139,17 @@ class RecipeController extends Controller
             $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
 
             $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
-            if ((($points * 1000) % 100 ) > 75 ) {
-                $points = ceil($points*10) / 10;
+            if ((($points * 1000) % 100) > 75) {
+                $points = ceil($points * 10) / 10;
             } else {
-                $points = floor($points*10) / 10;
+                $points = floor($points * 10) / 10;
             }
 
             $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
-            if ((($units * 1000) % 100 ) > 75 ) {
-                $units = ceil($units*10) / 10;
+            if ((($units * 1000) % 100) > 75) {
+                $units = ceil($units * 10) / 10;
             } else {
-                $units = floor($units*10) / 10;
+                $units = floor($units * 10) / 10;
             }
 
             $fooditem['points'] = $points;
@@ -190,10 +194,11 @@ class RecipeController extends Controller
             return response()->json($response, 404);
         }
 
-        if (!$request->image)
+        if (!$request->image) {
             $image = $recipe->image;
-        else
+        } else {
             $image = base64_encode($request->image);
+        }
 
         $recipe->update([
             'title' => $request->title,
@@ -216,7 +221,7 @@ class RecipeController extends Controller
             FoodValue::create([
                 'recipes_id' => $recipe->id,
                 'food_items_id' => $food_id[$i],
-                'amount' => $food_amount[$i]
+                'amount' => $food_amount[$i],
             ]);
         }
 
@@ -253,8 +258,7 @@ class RecipeController extends Controller
         return response()->json(true, 200);
     }
 
-    public function list(Request $request)
-    {
+    function list(Request $request) {
         $query = Recipe::query();
         $index = $request->get('index');
         $q = $request->get('q');
@@ -264,6 +268,7 @@ class RecipeController extends Controller
         if ($q) {
             $query->where('title', 'like', "%$q%");
         }
+        $query->where('user_id', 0);
         $recipes = $query->latest()->get();
         foreach ($recipes as $key => $recipe) {
             $foodvalues = FoodValue::where('recipes_id', $recipe->id)->latest()->get();
@@ -272,28 +277,29 @@ class RecipeController extends Controller
             $total_amount = 0;
             foreach ($foodvalues as $key1 => $foodvalue) {
                 $fooditem = FoodItem::where('id', $foodvalue->food_items_id)->first();
+                if ($fooditem) {
+                    $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
+                    if ((($points * 1000) % 100) > 75) {
+                        $points = ceil($points * 10) / 10;
+                    } else {
+                        $points = floor($points * 10) / 10;
+                    }
 
-                $points = ($fooditem->carbon / 15 + $fooditem->protein / 35 + $fooditem->fat / 15) * $foodvalue->amount / $fooditem->portion_in_grams;
-                if ((($points * 1000) % 100 ) > 75 ) {
-                    $points = ceil($points*10) / 10;
-                } else {
-                    $points = floor($points*10) / 10;
+                    $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
+                    if ((($units * 1000) % 100) > 75) {
+                        $units = ceil($units * 10) / 10;
+                    } else {
+                        $units = floor($units * 10) / 10;
+                    }
+
+                    $fooditem['points'] = $points;
+                    $fooditem['units'] = $units;
+                    $foodvalues[$key1]['food_item'] = $fooditem;
+
+                    $total_amount += $foodvalue->amount;
+                    $total_points += $points;
+                    $total_units += $units;
                 }
-
-                $units = ($fooditem->kcal * $foodvalue->amount) / (100 * $fooditem->portion_in_grams);
-                if ((($units * 1000) % 100 ) > 75 ) {
-                    $units = ceil($units*10) / 10;
-                } else {
-                    $units = floor($units*10) / 10;
-                }
-
-                $fooditem['points'] = $points;
-                $fooditem['units'] = $units;
-                $foodvalues[$key1]['food_item'] = $fooditem;
-
-                $total_amount += $foodvalue->amount;
-                $total_points += $points;
-                $total_units += $units;
             }
             $recipes[$key]['units'] = $total_units;
             $recipes[$key]['points'] = $total_points;
